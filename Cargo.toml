@@ -8,10 +8,6 @@ edition = "2021"
 [dependencies]
 
 [[bin]]
-name = "template"
-path = "src/template/main.rs"
-
-[[bin]]
 name = "1"
 path = "src/1/main.rs"
 
