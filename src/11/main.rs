@@ -9,15 +9,11 @@ impl Cavern {
     fn new(p: &[u8]) -> Self {
         let mut octos = [0; 100];
         octos.copy_from_slice(p);
-        Self {
-            octos,
-        }
+        Self { octos }
     }
 
     fn zero() -> Self {
-        Self {
-            octos: [0; 100],
-        }
+        Self { octos: [0; 100] }
     }
 
     fn get(&self, x: usize, y: usize) -> Option<u8> {
@@ -36,14 +32,14 @@ impl Cavern {
 
     fn neighbors(x: usize, y: usize) -> [(usize, usize); 8] {
         [
-            (x-1, y-1),
-            (x,   y-1),
-            (x+1, y-1),
-            (x-1, y),
-            (x+1, y),
-            (x-1, y+1),
-            (x,   y+1),
-            (x+1, y+1),
+            (x - 1, y - 1),
+            (x, y - 1),
+            (x + 1, y - 1),
+            (x - 1, y),
+            (x + 1, y),
+            (x - 1, y + 1),
+            (x, y + 1),
+            (x + 1, y + 1),
         ]
     }
 
@@ -69,7 +65,7 @@ impl Cavern {
 
                         for n in Self::neighbors(x, y).into_iter() {
                             if let Some(e) = self.get(n.0, n.1) {
-                                self.set(n.0, n.1, e+1);
+                                self.set(n.0, n.1, e + 1);
                             }
                         }
                     }
@@ -88,7 +84,6 @@ impl Cavern {
 
         flash_map.octos.into_iter().filter(|&x| x == 1).count()
     }
-
 }
 
 impl fmt::Display for Cavern {
@@ -112,8 +107,10 @@ impl fmt::Display for Cavern {
 fn part1() {
     let data = std::fs::read_to_string("src/11/data.txt").unwrap();
 
-    let nums: Vec<u8> = data.lines()
-        .flat_map(|l| l.chars().map(|c| c as u8 - '0' as u8)).collect();
+    let nums: Vec<u8> = data
+        .lines()
+        .flat_map(|l| l.chars().map(|c| c as u8 - '0' as u8))
+        .collect();
     assert_eq!(nums.len(), 100);
 
     let mut flashes = 0;
@@ -129,8 +126,10 @@ fn part1() {
 fn part2() {
     let data = std::fs::read_to_string("src/11/data.txt").unwrap();
 
-    let nums: Vec<u8> = data.lines()
-        .flat_map(|l| l.chars().map(|c| c as u8 - '0' as u8)).collect();
+    let nums: Vec<u8> = data
+        .lines()
+        .flat_map(|l| l.chars().map(|c| c as u8 - '0' as u8))
+        .collect();
     assert_eq!(nums.len(), 100);
 
     let mut c = Cavern::new(&nums);
@@ -140,7 +139,7 @@ fn part2() {
         i += 1;
     }
 
-    println!("part2: {}", i+1);
+    println!("part2: {}", i + 1);
 }
 
 fn main() {

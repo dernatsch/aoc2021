@@ -19,16 +19,16 @@ impl Population {
     fn advance(&mut self) {
         let old = &self.0;
         let new = [
-            old[1], // 0
-            old[2], // 1
-            old[3], // 2
-            old[4], // 3
-            old[5], // 4
-            old[6], // 5
+            old[1],          // 0
+            old[2],          // 1
+            old[3],          // 2
+            old[4],          // 3
+            old[5],          // 4
+            old[6],          // 5
             old[7] + old[0], // 6
-            old[8], // 7
-            old[0], // 8
-            ];
+            old[8],          // 7
+            old[0],          // 8
+        ];
 
         self.0 = new;
     }
@@ -40,8 +40,7 @@ impl Population {
 
 fn part1() {
     let data = std::fs::read_to_string("src/6/data.txt").unwrap();
-    let mut population =
-        data.lines().nth(0).unwrap().parse::<Population>().unwrap();
+    let mut population = data.lines().nth(0).unwrap().parse::<Population>().unwrap();
 
     for _ in 0..80 {
         population.advance();
@@ -52,8 +51,7 @@ fn part1() {
 
 fn part2() {
     let data = std::fs::read_to_string("src/6/data.txt").unwrap();
-    let mut population =
-        data.lines().nth(0).unwrap().parse::<Population>().unwrap();
+    let mut population = data.lines().nth(0).unwrap().parse::<Population>().unwrap();
 
     for _ in 0..256 {
         population.advance();

@@ -1,5 +1,5 @@
-use std::fmt;
 use std::cmp;
+use std::fmt;
 
 #[derive(Clone, Copy)]
 struct Line {
@@ -19,13 +19,11 @@ impl Line {
     }
 
     fn is_left_diagonal(&self) -> bool {
-        self.x2 - self.x1 == self.y2 - self.y1
-            && (self.x2 - self.x1 > 0) == (self.y2 - self.y1 > 0)
+        self.x2 - self.x1 == self.y2 - self.y1 && (self.x2 - self.x1 > 0) == (self.y2 - self.y1 > 0)
     }
 
     fn is_right_diagnoal(&self) -> bool {
-        self.x2 - self.x1 == self.y2 - self.y1
-            && (self.x2 - self.x1 < 0) == (self.y2 - self.y1 > 0)
+        self.x2 - self.x1 == self.y2 - self.y1 && (self.x2 - self.x1 < 0) == (self.y2 - self.y1 > 0)
     }
 
     fn contains(&self, x: i32, y: i32) -> bool {
@@ -78,17 +76,12 @@ impl Line {
         };
 
         r
-
     }
 }
 
 impl fmt::Debug for Line {
     fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), std::fmt::Error> {
-        write!(f, "({},{} -> {},{})",
-               self.x1,
-               self.y1,
-               self.x2,
-               self.y2)
+        write!(f, "({},{} -> {},{})", self.x1, self.y1, self.x2, self.y2)
     }
 }
 
@@ -108,12 +101,7 @@ impl std::str::FromStr for Line {
         let x2 = pb.next().unwrap().parse::<i32>().unwrap();
         let y2 = pb.next().unwrap().parse::<i32>().unwrap();
 
-        Ok(Self{
-            x1,
-            y1,
-            x2,
-            y2,
-        })
+        Ok(Self { x1, y1, x2, y2 })
     }
 }
 
@@ -135,8 +123,7 @@ fn print_board(b: &Vec<Line>) {
 fn part1() {
     let data = std::fs::read_to_string("src/5/data.txt").unwrap();
 
-    let vents: Vec<Line> =
-        data.lines().map(|x| x.parse::<Line>().unwrap()).collect();
+    let vents: Vec<Line> = data.lines().map(|x| x.parse::<Line>().unwrap()).collect();
 
     let mut overlaps = 0;
 
@@ -154,14 +141,16 @@ fn part1() {
 
 fn part2() {
     let data = std::fs::read_to_string("src/5/data.txt").unwrap();
-    let vents: Vec<Line> =
-        data.lines().map(|x| x.parse::<Line>().unwrap()).collect();
+    let vents: Vec<Line> = data.lines().map(|x| x.parse::<Line>().unwrap()).collect();
 
     let mut overlaps = 0;
 
     for x in 0..1000 {
         for y in 0..1000 {
-            let count = vents.iter().filter(|v| v.contains_with_diagonal(x, y)).count();
+            let count = vents
+                .iter()
+                .filter(|v| v.contains_with_diagonal(x, y))
+                .count();
             if count >= 2 {
                 overlaps += 1;
             }

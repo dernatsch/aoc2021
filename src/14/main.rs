@@ -1,5 +1,5 @@
+use std::collections::HashMap;
 use std::fmt::{self, Write};
-use std::collections::{HashMap};
 
 #[derive(Hash, Clone, Copy, PartialEq, Eq)]
 struct Pair(char, char);
@@ -7,10 +7,7 @@ struct Pair(char, char);
 impl Pair {
     fn new(s: &str) -> Self {
         assert!(s.len() == 2);
-        Self(
-            s.chars().nth(0).unwrap(),
-            s.chars().nth(1).unwrap(),
-        )
+        Self(s.chars().nth(0).unwrap(), s.chars().nth(1).unwrap())
     }
 }
 
@@ -36,7 +33,6 @@ impl Rule {
 
         let mut result = Vec::new();
 
-
         let left_pair = Pair(pair.0, middle);
         let right_pair = Pair(middle, pair.1);
 
@@ -44,7 +40,7 @@ impl Rule {
         result.push((left_pair, 1));
         result.push((right_pair, 1));
 
-        Self{
+        Self {
             pattern: pair,
             result,
             addition: middle,
@@ -62,41 +58,47 @@ impl Polymer {
     fn new(s: &str) -> Self {
         let mut pairs = HashMap::new();
 
-        for i in 0..s.len()-1 {
+        for i in 0..s.len() - 1 {
             let pair = Pair::new(&s[i..][..2]);
 
             match pairs.get_mut(&pair) {
-                None => { pairs.insert(pair, 1); },
-                Some(x) => { *x += 1 },
+                None => {
+                    pairs.insert(pair, 1);
+                }
+                Some(x) => *x += 1,
             }
         }
 
         let mut counts = HashMap::new();
         for c in s.chars() {
             match counts.get_mut(&c) {
-                None => { counts.insert(c, 1); },
-                Some(x) => { *x += 1 },
+                None => {
+                    counts.insert(c, 1);
+                }
+                Some(x) => *x += 1,
             }
         }
 
-        Self {
-            pairs,
-            counts,
-        }
+        Self { pairs, counts }
     }
 
     fn apply(&mut self, r: &Rule, m: i64) {
         for (pair, change) in &r.result {
             match self.pairs.get_mut(&pair) {
-                None => { self.pairs.insert(*pair, *change * m); },
-                Some(count) => { *count += change * m; },
+                None => {
+                    self.pairs.insert(*pair, *change * m);
+                }
+                Some(count) => {
+                    *count += change * m;
+                }
             }
-
         }
 
         match self.counts.get_mut(&r.addition) {
-            None => { self.counts.insert(r.addition, 1); },
-            Some(x) => { *x += m },
+            None => {
+                self.counts.insert(r.addition, 1);
+            }
+            Some(x) => *x += m,
         }
     }
 

@@ -7,10 +7,18 @@ fn part1() {
 
         for c in l.chars() {
             match c {
-                '(' => { stack.push(')'); },
-                '[' => { stack.push(']'); },
-                '{' => { stack.push('}'); },
-                '<' => { stack.push('>'); },
+                '(' => {
+                    stack.push(')');
+                }
+                '[' => {
+                    stack.push(']');
+                }
+                '{' => {
+                    stack.push('}');
+                }
+                '<' => {
+                    stack.push('>');
+                }
                 ')' | ']' | '}' | '>' => {
                     let last = stack.pop().unwrap();
                     if c != last {
@@ -24,8 +32,8 @@ fn part1() {
                         };
                         break;
                     }
-                },
-                _ => {},
+                }
+                _ => {}
             }
         }
     }
@@ -44,18 +52,26 @@ fn part2() {
 
         for c in l.chars() {
             match c {
-                '(' => { stack.push(')'); },
-                '[' => { stack.push(']'); },
-                '{' => { stack.push('}'); },
-                '<' => { stack.push('>'); },
+                '(' => {
+                    stack.push(')');
+                }
+                '[' => {
+                    stack.push(']');
+                }
+                '{' => {
+                    stack.push('}');
+                }
+                '<' => {
+                    stack.push('>');
+                }
                 ')' | ']' | '}' | '>' => {
                     let last = stack.pop().unwrap();
                     if c != last {
                         invalid = true;
                         break;
                     }
-                },
-                _ => {},
+                }
+                _ => {}
             }
         }
 
@@ -76,7 +92,7 @@ fn part2() {
     }
 
     scores.sort_unstable();
-    println!("part2: {}", scores[scores.len()/2]);
+    println!("part2: {}", scores[scores.len() / 2]);
 }
 
 fn main() {

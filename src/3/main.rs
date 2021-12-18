@@ -49,26 +49,27 @@ fn part2() {
 
     for pos in 0..LINELEN {
         let (gamma, _epsilon) = gammaepsilon(&oxy_numbers);
-        let gamma_bit_set = ((gamma >> (LINELEN-pos-1)) & 1) == 1;
+        let gamma_bit_set = ((gamma >> (LINELEN - pos - 1)) & 1) == 1;
 
-        oxy_numbers = oxy_numbers.into_iter().filter(|x| {
-            (x.chars().nth(pos).unwrap() == '1') == gamma_bit_set
-        }).collect();
+        oxy_numbers = oxy_numbers
+            .into_iter()
+            .filter(|x| (x.chars().nth(pos).unwrap() == '1') == gamma_bit_set)
+            .collect();
 
         if oxy_numbers.len() <= 1 {
             break;
         }
-
     }
 
     for pos in 0..LINELEN {
         let (_, epsilon) = gammaepsilon(&co2_numbers);
-        let epsilon_bit_unset = ((epsilon >> (LINELEN-pos-1)) & 1) == 0;
+        let epsilon_bit_unset = ((epsilon >> (LINELEN - pos - 1)) & 1) == 0;
 
-        co2_numbers = co2_numbers.into_iter().filter(|x| {
-            (x.chars().nth(pos).unwrap() == '0') == epsilon_bit_unset
-        }).collect();
-        
+        co2_numbers = co2_numbers
+            .into_iter()
+            .filter(|x| (x.chars().nth(pos).unwrap() == '0') == epsilon_bit_unset)
+            .collect();
+
         if co2_numbers.len() <= 1 {
             break;
         }

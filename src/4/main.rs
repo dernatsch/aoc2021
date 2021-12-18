@@ -66,7 +66,8 @@ impl From<&[&str]> for Board {
         let mut b = [0; 25];
 
         for l in 0..5 {
-            let nums: Vec<u32> = lines[l].split_whitespace()
+            let nums: Vec<u32> = lines[l]
+                .split_whitespace()
                 .map(|x| x.parse::<u32>().unwrap())
                 .collect();
 
@@ -98,8 +99,10 @@ fn part1() {
     let data = std::fs::read_to_string("src/4/data.txt").unwrap();
     let lines = data.lines().collect::<Vec<&str>>();
 
-    let numbers: Vec<u32> =
-        lines[0].split(',').map(|x| x.parse::<u32>().unwrap()).collect();
+    let numbers: Vec<u32> = lines[0]
+        .split(',')
+        .map(|x| x.parse::<u32>().unwrap())
+        .collect();
 
     let mut boards = Vec::new();
 
@@ -125,8 +128,10 @@ fn part2() {
     let data = std::fs::read_to_string("src/4/data.txt").unwrap();
     let lines = data.lines().collect::<Vec<&str>>();
 
-    let numbers: Vec<u32> =
-        lines[0].split(',').map(|x| x.parse::<u32>().unwrap()).collect();
+    let numbers: Vec<u32> = lines[0]
+        .split(',')
+        .map(|x| x.parse::<u32>().unwrap())
+        .collect();
 
     let mut boards = Vec::new();
 
