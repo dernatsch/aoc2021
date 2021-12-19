@@ -199,39 +199,33 @@ fn version_sum(p: &Packet) -> u32 {
 
 fn eval_packet(p: &Packet) -> Option<u64> {
     match &p.content {
-        PacketContent::Operator(sps) => {
-            match p.typeid {
-                0 => Some(sps.iter().flat_map(|sp| eval_packet(sp)).sum()),
-                1 => Some(sps.iter().flat_map(|sp| eval_packet(sp)).product()),
-                2 => Some(sps.iter().flat_map(|sp| eval_packet(sp)).min()?),
-                3 => Some(sps.iter().flat_map(|sp| eval_packet(sp)).max()?),
-                5 => {
-                    let left = eval_packet(sps.get(0)?)?;
-                    let right = eval_packet(sps.get(1)?)?;
+        PacketContent::Operator(sps) => match p.typeid {
+            0 => Some(sps.iter().flat_map(|sp| eval_packet(sp)).sum()),
+            1 => Some(sps.iter().flat_map(|sp| eval_packet(sp)).product()),
+            2 => Some(sps.iter().flat_map(|sp| eval_packet(sp)).min()?),
+            3 => Some(sps.iter().flat_map(|sp| eval_packet(sp)).max()?),
+            5 => {
+                let left = eval_packet(sps.get(0)?)?;
+                let right = eval_packet(sps.get(1)?)?;
 
-                    Some(if left > right {1} else { 0 })
-                }
-                6 => {
-                    let left = eval_packet(sps.get(0)?)?;
-                    let right = eval_packet(sps.get(1)?)?;
-
-                    Some(if left < right {1} else { 0 })
-                }
-                7 => {
-                    let left = eval_packet(sps.get(0)?)?;
-                    let right = eval_packet(sps.get(1)?)?;
-
-                    Some(if left == right {1} else { 0 })
-                }
-                _ => None,
+                Some(if left > right { 1 } else { 0 })
             }
+            6 => {
+                let left = eval_packet(sps.get(0)?)?;
+                let right = eval_packet(sps.get(1)?)?;
+
+                Some(if left < right { 1 } else { 0 })
+            }
+            7 => {
+                let left = eval_packet(sps.get(0)?)?;
+                let right = eval_packet(sps.get(1)?)?;
+
+                Some(if left == right { 1 } else { 0 })
+            }
+            _ => None,
         },
-        PacketContent::Literal(n) => {
-            Some(*n)
-        },
-        _ => {
-            None
-        },
+        PacketContent::Literal(n) => Some(*n),
+        _ => None,
     }
 }
 
