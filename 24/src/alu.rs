@@ -1,3 +1,6 @@
+use std::io::{stdin, stdout};
+use std::io::Write;
+
 #[derive(Debug)]
 pub struct AluError{
     pub err: &'static str,
@@ -90,6 +93,26 @@ impl ALU {
 
     pub fn print_state(&self) {
         println!("State: x={}, y={}, z={}, w={}", self.x, self.y, self.z, self.w);
+    }
+}
+
+pub fn get_input() -> Result<i64, AluError> {
+
+    fn parse(s: &str) -> Result<i64, AluError> {
+        match s.trim().parse::<i64>() {
+            Ok(i) => Ok(i),
+            Err(_) => Err(AluError{err: "parsing of number failed"}),
+        }
+    }
+
+    let mut s = String::new();
+
+    print!("Enter Number: ");
+    stdout().lock().flush().unwrap();
+
+    match stdin().read_line(&mut s) {
+        Ok(_) => parse(&s),
+        Err(_) => Err(AluError{err: "parsing of input failed"}),
     }
 }
 
