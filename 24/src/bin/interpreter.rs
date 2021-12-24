@@ -1,8 +1,5 @@
 use std::io::{stdin, stdout};
 use std::io::Write;
-
-mod alu;
-
 use alu::*;
 
 fn get_input() -> Result<i64, alu::AluError> {
