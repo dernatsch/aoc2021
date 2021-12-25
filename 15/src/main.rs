@@ -166,7 +166,14 @@ impl Cave {
 
     fn risk_at(&self, coordinate: &Coordinates) -> Risk {
         let increase = coordinate.x / self.height + coordinate.y / self.width;
-        self.risk_levels[coordinate.x % self.height][coordinate.y % self.width] % 10
+        let initial_risk = self.risk_levels[coordinate.x % self.height][coordinate.y % self.width];
+        let risk = initial_risk + ( increase as Risk );
+
+        if risk > 9 {
+            risk % 9
+        } else {
+            risk
+        }
     }
 
     fn risk_sum_at(&self, coordinate: &Coordinates) -> Risk {
@@ -225,9 +232,8 @@ fn main() {
     println!("Part A's sum is {}", risk);
 
     cave.size_factor = 5;
-    cave.print_risks()
-    //risk = cave.traverse();
-    //println!("Part B's sum is {}", risk);
+    risk = cave.traverse();
+    println!("Part B's sum is {}", risk);
 }
 
 #[cfg(test)]
@@ -274,10 +280,36 @@ mod tests {
         let mut cave = Cave::from_str(&EXAMPLE_CAVE).unwrap();
         assert_eq!(cave.risk_at(&Coordinates { x: 0, y: 0 }), 1);
         assert_eq!(cave.risk_at(&Coordinates { x: 1, y: 2 }), 8);
-
+    }
+    
+    #[test]
+    fn traverse_example_works() {
+        let mut cave = Cave::from_str(&EXAMPLE_CAVE).unwrap();
         cave.print_risks();
-        cave.traverse();
+        assert_eq!(cave.traverse(), 40);
         println!("");
         cave.print_risk_sums();
+    }
+
+    #[test]
+    fn traverse_example_factor_works() {
+        let mut cave = Cave::from_str(&EXAMPLE_CAVE).unwrap();
+        cave.size_factor = 5;
+
+        cave.print_risks();
+
+        assert_eq!(cave.traverse(), 315);
+    }
+
+    #[test]
+    fn size_factor_works() {
+        let mut cave = create_simple_cave();
+
+        cave.size_factor = 5;
+
+        assert_eq!(cave.risk_at(&Coordinates{ x: 0, y: 0})+1, cave.risk_at(&Coordinates{ x: 3, y:0}));
+        assert_eq!(cave.risk_at(&Coordinates{ x: 0, y: 0})+2, cave.risk_at(&Coordinates{ x: 3, y:3}));
+
+        cave.print_risks();
     }
 }
